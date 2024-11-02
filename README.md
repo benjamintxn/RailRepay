@@ -126,7 +126,7 @@ For questions or suggestions, please open an issue on the GitHub repository (htt
 
 ## Licensing
 
-- Parts of this project are based on code from the train-delay project by Alex Gregory, used under the MIT License.
+- Parts of this project are based on code from the train-delay project by Alex Gregory (https://github.com/axxander/train-delay), used under the MIT License.
 - The original MIT License and copyright notice are included.
 
 Disclaimer: This tool is intended to assist users in calculating potential compensation due to train delays. The actual compensation may vary based on the train operating company’s policies and the accuracy of the data provided by the National Rail APIs. Users should verify the information and consult the relevant train operator for official claims.
