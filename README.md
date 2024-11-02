@@ -1,65 +1,132 @@
-# Train Delay
-Train Delay interacts with the National Rail Darwin Data Feeds Historical Service Performance APIs to get the actual time of arrival of trains within the UK.
+# RailRepay
+
+RailRepay is a command-line application that interacts with the National Rail Darwin Data Feeds Historical Service Performance (HSP) APIs to help UK train passengers calculate potential compensation due to train delays. It determines the delay duration, checks eligibility based on various Train Operating Companies’ (TOCs) Delay Repay policies, and calculates the refund amount.
 
 ## Motivation
-Having spent a lot of time on trains during my student and post-student days, I inevitably got delayed frequently. At least, with the introduction of compensation for dawdling services, I could get some money back! However, this was never as easy as advertised. 
 
-The obfuscation of critical information, such as the actual arrival time, was infuriating. This was amplified when trying to calculate the total delay of a multi-leg journey consisting of many operators. So, I wrote a quick application to get the *actual* arrival time of trains using the National Rail APIs. 
+Train delays are a common inconvenience for passengers in the UK. While compensation schemes like Delay Repay exist, determining eligibility and calculating the refund amount can be confusing due to varying policies across different TOCs. RailRepay simplifies this process by providing an easy-to-use tool that calculates potential compensation based on actual train performance data.
 
 ## Roadmap
-There are many features that I intend to add in the future. A select few are:
-- Output the scheduled journey times (departure and arrival) so users can clarify it is the correct service.
-- Multi-leg ticket system where the total delay can be calculated, as well as the operator responsible for delays.
-- Making the station name system more user friendly.
+
+Future enhancements planned for RailRepay include:
+
+	- Support for Additional TOCs: Expand compatibility to include more train operators with their respective refund policies.
+	- Multi-Leg Journeys: Allow users to input journeys with multiple legs and calculate total delays and compensation.
+	- Automated Claim Submission: Integrate with TOCs’ online systems to automate the submission of compensation claims.
+	- Graphical User Interface (GUI): Develop a user-friendly GUI for easier interaction.
+	- Data Validation: Implement station code validation and more robust input handling.
 
 ## Installation
-Use the package manager [pip](https://pip.pypa.io/en/stable/) to install Python project dependencies.
+
+Ensure you have Python 3.7+ (https://www.python.org/downloads/) installed on your system.
+
+### Clone the Repository
+
+```bash
+git clone https://github.com/benjamintxn/railrepay.git
+cd railrepay
+```
+
+### Set Up a Virtual Environment (Optional but Recommended)
+
+Create and activate a virtual environment to manage dependencies:
+
+```bash
+python -m venv .venv
+# On Windows:
+.venv\Scripts\activate
+# On macOS/Linux:
+source .venv/bin/activate
+```
+
+### Install Dependencies
+
+Install the required Python packages using pip:
 
 ```bash
 pip install -r requirements.txt
 ```
 
-Create the alias command "traindelay" to launch the Train Delay App from anywhere. On Linux OS, change from `.bash_profile` to `.bashrc`.
+### Set Up Environment Variables
+
+RailRepay requires access to the National Rail Darwin Data Feeds HSP API. You need to obtain credentials by registering on the National Rail Data Portal (https://opendata.nationalrail.co.uk).
+
+Set the following environment variables with your credentials:
+
 ```bash
-source traindelay/alias.sh
+# On Windows:
+set DARWIN_EMAIL=your_email@example.com
+set DARWIN_PASS=your_password
+
+# On macOS/Linux:
+export DARWIN_EMAIL='your_email@example.com'
+export DARWIN_PASS='your_password'
+```
+
+Alternatively, you can create a .env file in the project root:
+
+```bash
+DARWIN_EMAIL=your_email@example.com
+DARWIN_PASS=your_password
 ```
 
 ## Usage
-The general syntax is
+
+The general syntax is:
 
 ```bash
-traindelay origin-station-CRS destination-station-CRS HHMM YYYY-MM-DD
+python traindelay.py <origin_station_code> <destination_station_code> <departure_time> <journey_date>
 ```
 
-where `origin-station-CRS` and `destination-station-CRS` are the CRS codes of the origin and destination station respectively. The CRS code is a unique station identifier. A list of stations and their corresponding CRS code can be found [here](https://www.nationalrail.co.uk/stations_destinations/48541.aspx). `HHMM` is the time (hour, minute) and `YYYY-MM-DD` is the date (year, month, day).
+	- <origin_station_code>: CRS code of the departure station (e.g., WAT for London Waterloo).
+	- <destination_station_code>: CRS code of the arrival station (e.g., WOK for Woking).
+	- <departure_time>: Scheduled departure time in HHMM 24-hour format (e.g., 0653 for 6:53 AM).
+	- <journey_date>: Date of the journey in YYYY-MM-DD format (e.g., 2023-10-14).
 
-### Example: York -> Sheffield
-Train departing from `York` (CRS: YRK) to `Sheffield` (CRS: SHF) at `0954` on `2020-10-09`
+### Example: London Waterloo to Woking
+
 ```bash
-traindelay yrk shf 0954 2020-10-09
+python traindelay.py WAT WOK 0653 2023-10-14
 ```
-Train Delay response
+
+### Sample Output:
+
 ```bash
-Journey: YRK --> SHF
-Scheduled Arrival: 0954
-Actual Arrival: 1004
+Journey: WAT --> WOK
+Operator: South Western Railway
+Scheduled Arrival: 0726
+Actual Arrival: 0745
+Delay: 19 minutes
+You are eligible for a 25% refund on your single fare.
+Enter the amount you paid for the ticket in GBP: £20.00
+You can get compensated: £5.00
 ```
 
-### Example: Leicester -> Narborough
-Train departing from `Leicester` (CRS: LEI) to `Narborough` (CRS: NBR) at `1550` on `2020-10-26`
-```bash
-traindelay lei nbr 1550 2020-10-26
-```
-Train Delay response
-```bash
-Journey: LEI --> NBR
-Scheduled Arrival: 1559
-Actual Arrival: 1558
-```
+### Supported Train Operators
 
-## Tests
-The unit tests currently only cover the regular expression for handling the command line interface.
+	- East Midlands Railway (EM)
+	- South Western Railway (SW)
+	- Great Western Railway (GW)
+	- Chiltern Railways (CH)
+	- CrossCountry (XC)
+	- Southeastern (SE)
 
-## License
-[MIT](https://choosealicense.com/licenses/mit/)
+## Project Structure
 
+	- traindelay.py: Main script to run the application.
+	- services.py: Contains classes for API interactions (ServiceMetric, ServiceDetail).
+	- utils.py: Utility functions for argument parsing and calculations.
+	- policies.py: Definitions of refund policies and operator names.
+	- constants.py: Constants used across the application.
+	- requirements.txt: List of Python package dependencies.
+
+## Contact
+
+For questions or suggestions, please open an issue on the GitHub repository (https://github.com/benjamintxn/RailRepay/issues).
+
+## Licensing
+
+    - Parts of this project are based on code from the train-delay project by Alex Gregory, used under the MIT License.
+    - The original MIT License and copyright notice are included.
+
+Disclaimer: This tool is intended to assist users in calculating potential compensation due to train delays. The actual compensation may vary based on the train operating company’s policies and the accuracy of the data provided by the National Rail APIs. Users should verify the information and consult the relevant train operator for official claims.
