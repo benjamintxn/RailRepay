@@ -10,11 +10,11 @@ Train delays are a common inconvenience for passengers in the UK. While compensa
 
 Future enhancements planned for RailRepay include:
 
-	- Support for Additional TOCs: Expand compatibility to include more train operators with their respective refund policies.
-	- Multi-Leg Journeys: Allow users to input journeys with multiple legs and calculate total delays and compensation.
-	- Automated Claim Submission: Integrate with TOCs’ online systems to automate the submission of compensation claims.
-	- Graphical User Interface (GUI): Develop a user-friendly GUI for easier interaction.
-	- Data Validation: Implement station code validation and more robust input handling.
+- Support for Additional TOCs: Expand compatibility to include more train operators with their respective refund policies.
+- Multi-Leg Journeys: Allow users to input journeys with multiple legs and calculate total delays and compensation.
+- Automated Claim Submission: Integrate with TOCs’ online systems to automate the submission of compensation claims.
+- Graphical User Interface (GUI): Develop a user-friendly GUI for easier interaction.
+- Data Validation: Implement station code validation and more robust input handling.
 
 ## Installation
 
@@ -78,10 +78,10 @@ The general syntax is:
 python traindelay.py <origin_station_code> <destination_station_code> <departure_time> <journey_date>
 ```
 
-	- <origin_station_code>: CRS code of the departure station (e.g., WAT for London Waterloo).
-	- <destination_station_code>: CRS code of the arrival station (e.g., WOK for Woking).
-	- <departure_time>: Scheduled departure time in HHMM 24-hour format (e.g., 0653 for 6:53 AM).
-	- <journey_date>: Date of the journey in YYYY-MM-DD format (e.g., 2023-10-14).
+- <origin_station_code>: CRS code of the departure station (e.g., WAT for London Waterloo).
+- <destination_station_code>: CRS code of the arrival station (e.g., WOK for Woking).
+- <departure_time>: Scheduled departure time in HHMM 24-hour format (e.g., 0653 for 6:53 AM).
+- <journey_date>: Date of the journey in YYYY-MM-DD format (e.g., 2023-10-14).
 
 ### Example: London Waterloo to Woking
 
@@ -104,21 +104,21 @@ You can get compensated: £5.00
 
 ### Supported Train Operators
 
-	- East Midlands Railway (EM)
-	- South Western Railway (SW)
-	- Great Western Railway (GW)
-	- Chiltern Railways (CH)
-	- CrossCountry (XC)
-	- Southeastern (SE)
+- East Midlands Railway (EM)
+- South Western Railway (SW)
+- Great Western Railway (GW)
+- Chiltern Railways (CH)
+- CrossCountry (XC)
+- Southeastern (SE)
 
 ## Project Structure
 
-	- traindelay.py: Main script to run the application.
-	- services.py: Contains classes for API interactions (ServiceMetric, ServiceDetail).
-	- utils.py: Utility functions for argument parsing and calculations.
-	- policies.py: Definitions of refund policies and operator names.
-	- constants.py: Constants used across the application.
-	- requirements.txt: List of Python package dependencies.
+- traindelay.py: Main script to run the application.
+- services.py: Contains classes for API interactions (ServiceMetric, ServiceDetail).
+- utils.py: Utility functions for argument parsing and calculations.
+- policies.py: Definitions of refund policies and operator names.
+- constants.py: Constants used across the application.
+- requirements.txt: List of Python package dependencies.
 
 ## Contact
 
@@ -126,7 +126,7 @@ For questions or suggestions, please open an issue on the GitHub repository (htt
 
 ## Licensing
 
-    - Parts of this project are based on code from the train-delay project by Alex Gregory, used under the MIT License.
-    - The original MIT License and copyright notice are included.
+- Parts of this project are based on code from the train-delay project by Alex Gregory, used under the MIT License.
+- The original MIT License and copyright notice are included.
 
 Disclaimer: This tool is intended to assist users in calculating potential compensation due to train delays. The actual compensation may vary based on the train operating company’s policies and the accuracy of the data provided by the National Rail APIs. Users should verify the information and consult the relevant train operator for official claims.
