@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ selected_option }} Refund Form</title>
+    <script>
+        // JavaScript function to set today's date as the max date for the date input and max time for the time input
+        function setMaxDate_time() {
+            // Get today's date
+            var today = new Date();
+            
+            // Format the date in YYYY-MM-DD format
+            var dd = String(today.getDate()).padStart(2, '0');
+            var mm = String(today.getMonth() + 1).padStart(2, '0'); // Months are zero-indexed
+            var yyyy = today.getFullYear();
+            today = yyyy + '-' + mm + '-' + dd; // Format as YYYY-MM-DD
+
+            // Format the current time in HH:mm format
+            var hours = String(today.getHours()).padStart(2, '0');
+            var minutes = String(today.getMinutes()).padStart(2, '0');
+            var timetoday = hours + ':' + minutes; // Format as HH:mm
+
+            // Set today's date as the max attribute for the date input
+            document.getElementById("train_date").setAttribute("max", today);
+
+            // Set the current time as the max attribute for the time input
+            document.getElementById("train_time").setAttribute("max", timetoday);
+        }
+    
+        // Call the setMaxDate_time function when the page loads
+        window.onload = setMaxDate_time;
+
+        // Function to prevent form submission if date/time is in the future
+        function validateForm() {
+            var today = new Date();
+            var inputDate = new Date(document.getElementById("train_date").value + ' ' + document.getElementById("train_time").value);
+            
+            // Compare input date and time with today's date and time
+            if (inputDate > today) {
+                alert("The date and time cannot be in the future.");
+                return false;  // Prevent form submission
+            }
+            return true; // Allow form submission
+        }
+    </script>
+</head>
+<body>
+    <h1>Rail Repay</h1>
+    <h3 style="margin-top: 20px;">Welcome {{ first_name }} to your refund for {{ selected_option }}</h3>
+
+    <form method="POST" onsubmit="return validateForm()">
+        <label for="train_date">What date did you travel:</label>
+        <input type="date" id="train_date" name="train_date"><br><br>
+        
+        <label for="train_time">What time was the train expected:</label>
+        <input type="time" id="train_time" name="train_time"><br><br>
+        
+        <button type="submit">Submit</button>
+    </form>
+
+    {% if train_date %}
+        <h3>Your selected travel date is: {{ train_date }}</h3> <!-- Display the train date below the form -->
+    {% endif %}
+</body>
+</html>
