@@ -1,0 +1,7 @@
+# Ignore .env files to protect password and usernames
+.env
+*.env
+
+# Ignore __pycache__ folders and .pyc files
+__pycache__/
+*.pyc
